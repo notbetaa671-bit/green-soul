@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#071311" />
+    <meta name="description" content="GREEN SOUL — a pixel-art shield survival adventure." />
+    <title>GREEN SOUL // Shield of the Wild</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <div class="scanlines" aria-hidden="true"></div>
+      <section class="game-frame" aria-label="Green Soul game">
+        <header class="brand-bar">
+          <div class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true">◆</span>
+            <span>GREEN SOUL</span>
+          </div>
+          <div class="brand-meta">FIELD LOG // 07</div>
+        </header>
+
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="960" height="540" tabindex="0" aria-label="Green Soul game canvas"></canvas>
+          <div id="hud" class="hud is-hidden" aria-live="polite">
+            <div class="hud-left">
+              <div class="hud-chip"><span class="hud-label">SOUL</span><span id="hudHealth">♥♥♥</span></div>
+              <div class="hud-chip"><span class="hud-label">WAVE</span><span id="hudWave">01 / 04</span></div>
+            </div>
+            <div class="hud-center"><span id="hudObjective">PROTECT THE HEART</span></div>
+            <div class="hud-right">
+              <div class="hud-chip"><span class="hud-label">SCORE</span><span id="hudScore">000000</span></div>
+              <div class="hud-chip"><span class="hud-label">BEST</span><span id="hudBest">000000</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="menuPanel" class="screen-panel menu-panel">
+          <div class="menu-copy">
+            <p class="eyebrow">A SMALL ARCADE ADVENTURE</p>
+            <h1>GREEN <span>SOUL</span></h1>
+            <p class="tagline">Hold the line. Read the pattern. Let nothing through.</p>
+            <div class="title-sigil" aria-hidden="true"><span>✦</span></div>
+          </div>
+          <div class="menu-actions">
+            <button class="button button-primary" data-action="campaign">START CAMPAIGN <span>↗</span></button>
+            <button class="button" data-action="endless">ENDLESS SURVIVAL <span>∞</span></button>
+            <button class="button button-quiet" data-action="tutorial">HOW TO PLAY <span>?</span></button>
+            <button class="button button-quiet" data-action="settings">SETTINGS <span>⚙</span></button>
+          </div>
+          <p class="version-label">v1.0 // ORIGINAL PIXEL FIELD TEST</p>
+        </div>
+
+        <div id="levelPanel" class="screen-panel is-hidden">
+          <div class="panel-heading">
+            <p class="eyebrow">THE LIVING PATH</p>
+            <h2>CHOOSE A FIELD</h2>
+            <p>Each field teaches a new rhythm. Clear the guardian to open the next.</p>
+          </div>
+          <div id="levelCards" class="level-grid"></div>
+          <button class="button button-quiet back-button" data-action="menu">← BACK TO ROOT</button>
+        </div>
+
+        <div id="tutorialPanel" class="screen-panel is-hidden">
+          <div class="panel-heading">
+            <p class="eyebrow">FIELD NOTES // 01</p>
+            <h2>THE SOUL SHIELD</h2>
+            <p>Keep your green soul alive by turning your shield toward danger.</p>
+          </div>
+          <div class="tutorial-grid">
+            <div class="tutorial-card"><span class="tutorial-icon">↕</span><strong>MOVE</strong><p>Arrow keys or WASD. On touch, drag the soul around the field.</p></div>
+            <div class="tutorial-card"><span class="tutorial-icon">◒</span><strong>GUARD</strong><p>A shield follows your aim. Face incoming seeds and hold SPACE to brace.</p></div>
+            <div class="tutorial-card"><span class="tutorial-icon">✦</span><strong>GROW</strong><p>Block shots for a perfect guard to earn bloom energy and bonus score.</p></div>
+            <div class="tutorial-card"><span class="tutorial-icon">⌁</span><strong>READ</strong><p>Every attack has a tell. Stay calm, find the gap, and survive the wave.</p></div>
+          </div>
+          <div class="control-strip"><span>KEYBOARD</span> MOVE: WASD / ARROWS · AIM: MOUSE · BRACE: SPACE · PAUSE: ESC</div>
+          <button class="button button-primary back-button" data-action="menu">I'M READY <span>↗</span></button>
+        </div>
+
+        <div id="settingsPanel" class="screen-panel is-hidden">
+          <div class="panel-heading">
+            <p class="eyebrow">FIELD SYSTEMS</p>
+            <h2>SETTINGS</h2>
+            <p>Make the field feel right for you.</p>
+          </div>
+          <div class="settings-list">
+            <label class="setting-row"><span><strong>SOUND</strong><small>Music and shield feedback</small></span><input id="soundToggle" type="checkbox" checked /></label>
+            <label class="setting-row"><span><strong>REDUCED MOTION</strong><small>Soften screen shake and particles</small></span><input id="motionToggle" type="checkbox" /></label>
+            <label class="setting-row"><span><strong>HIGH CONTRAST</strong><small>Boost danger colors and outlines</small></span><input id="contrastToggle" type="checkbox" /></label>
+          </div>
+          <button class="button button-quiet back-button" data-action="menu">← BACK TO ROOT</button>
+        </div>
+
+        <div id="pausePanel" class="screen-panel modal-panel is-hidden">
+          <p class="eyebrow">FIELD PAUSED</p>
+          <h2>TAKE A BREATH</h2>
+          <p>The patterns will wait.</p>
+          <div class="modal-actions"><button class="button button-primary" data-action="resume">RESUME <span>↗</span></button><button class="button button-quiet" data-action="quit">QUIT RUN <span>×</span></button></div>
+        </div>
+
+        <div id="gameOverPanel" class="screen-panel modal-panel is-hidden">
+          <p id="resultEyebrow" class="eyebrow">FIELD COLLAPSED</p>
+          <h2 id="resultTitle">THE ROOT REMEMBERS</h2>
+          <p id="resultCopy">Every failed run leaves a map behind.</p>
+          <div class="result-stats"><div><span>SCORE</span><strong id="resultScore">000000</strong></div><div><span>BEST</span><strong id="resultBest">000000</strong></div></div>
+          <div class="modal-actions"><button class="button button-primary" data-action="restart">TRY AGAIN <span>↗</span></button><button class="button button-quiet" data-action="menu">MAIN MENU <span>⌂</span></button></div>
+        </div>
+      </section>
+      <footer class="site-footer"><span>GREEN SOUL</span><span>ORIGINAL WEB ARCADE · NO TRACKING · NO EXTERNAL ASSETS</span></footer>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>
